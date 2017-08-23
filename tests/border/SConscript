@@ -1,0 +1,11 @@
+Import("test_env", "gtest")
+
+bordertests_env = test_env.Clone()
+
+OUT = "run"
+SRC = Glob("*.cpp")
+
+bordertests_env.Append(LIBS=[gtest])
+
+prog = bordertests_env.Program(OUT, SRC)
+Default(prog)
