@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.3">
+  <zoom_level>12</zoom_level>
+  <element>
+    <type>com.baselet.element.old.allinone.SequenceDiagram</type>
+    <coordinates>
+      <x>756</x>
+      <y>204</y>
+      <w>540</w>
+      <h>252</h>
+    </coordinates>
+    <panel_attributes>title: chat, broadcast
+client 1~C1|server~S|client 2~C2
+C1-&gt;S:msg
+S.&gt;C1:ok/fail
+S-&gt;C2:msg</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.baselet.element.old.allinone.SequenceDiagram</type>
+    <coordinates>
+      <x>120</x>
+      <y>636</y>
+      <w>540</w>
+      <h>612</h>
+    </coordinates>
+    <panel_attributes>title: send file
+client 1~C1|server~S|client 2~C2
+C1-&gt;S:send request
+S-&gt;C2:send request
+C2.&gt;S:ok/deny/fail
+S.&gt;C1:ok/deny/fail
+~
+C1-&gt;S:file block
+S-&gt;C2:file block
+C2.&gt;S:ok/fail
+S.&gt;C1:ok/fail
+~
+~
+~
+S.&gt;C2:checksum</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.baselet.element.old.allinone.SequenceDiagram</type>
+    <coordinates>
+      <x>120</x>
+      <y>204</y>
+      <w>540</w>
+      <h>324</h>
+    </coordinates>
+    <panel_attributes>title: chat, peer to peer
+client 1~C1|server~S|client 2~C2
+C1-&gt;S:msg
+S.&gt;C1:ok/fail
+S-&gt;C2:msg
+C2.&gt;S:ok/fail
+S.&gt;C1:delivered
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
