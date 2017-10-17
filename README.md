@@ -8,7 +8,13 @@ MIT License, see LICENSE.txt.
 
 # Prerequisites
 
-- g++/clang++, scons, libboost-all-dev, python, python-nose, doxygen
+- g++7 / clang++5 / MSVC++2017
+- scons, libboost-all-dev, python, python-nose, doxygen
+
+## MSVC++ 2017 installation
+
+Visual Studio 2017 Build Tools
+- C++ Desktop
 
 # Tests
 
