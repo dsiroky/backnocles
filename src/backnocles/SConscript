@@ -5,17 +5,15 @@ SRC = Glob("*.cpp")
 # separate main.cpp
 SRC = [s for s in SRC if s.get_path() != MAIN]
 
-OUT = "downloader"
+OUT = "backnocles"
 
-downloader_lib = src_env.StaticLibrary(OUT, SRC)
+backnocles_lib = src_env.StaticLibrary(OUT, SRC)
 
 src_env.AppendUnique(
         LIBS=[
-            downloader_lib
+            backnocles_lib
         ])
-src_env.AddBoost(["boost_system", "boost_coroutine", "boost_context",
-                    "boost_thread", "boost_regex"])
 
-downloader_prog = src_env.Program(OUT, [MAIN])[0]
+backnocles_prog = src_env.Program(OUT, [MAIN])[0]
 
-Export("src_env", "downloader_prog")
+Export("backnocles_lib", "backnocles_prog")

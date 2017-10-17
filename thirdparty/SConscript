@@ -8,7 +8,8 @@ def setup_env(env):
     if env["USE_MSVC"]:
         env.AppendUnique(ARFLAGS=["/NODEFAULTLIB"])
     else:
-        env.AppendUnique(CPPFLAGS=["-fPIC"])
+        # disable warnings
+        env.AppendUnique(CCFLAGS=["-w"])
     return env
 
 #--------------------------------------------------------------------------

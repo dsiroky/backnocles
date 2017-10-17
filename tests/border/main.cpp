@@ -4,9 +4,9 @@
 
 #include <string.h>
 
-#include "downloader/disablewarnings.hpp"
+#include "backnocles/common/disablewarnings.hpp"
   #include <gtest/gtest.h>
-#include "downloader/enablewarnings.hpp"
+#include "backnocles/common/enablewarnings.hpp"
 
 //==========================================================================
 
