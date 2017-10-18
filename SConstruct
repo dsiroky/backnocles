@@ -89,10 +89,9 @@ env.PretifyOutput(verbose,
 
 #==========================================================================
 
-path_splitter = ";" if env["OS"] == "msw" else ":"
 env.AppendUnique(
-    CPPPATH=os.environ.get("CPPPATH", "").split(path_splitter),
-    LIBPATH=os.environ.get("LIBPATH", "").split(path_splitter),
+    CPPPATH=os.environ.get("CPPPATH", "").split(os.pathsep),
+    LIBPATH=os.environ.get("LIBPATH", "").split(os.pathsep),
 )
 
 env.AppendUnique(
