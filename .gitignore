@@ -2,3 +2,5 @@ build
 .build_cache
 *.pyc
 *.pyo
+SConscript_conan
+conaninfo.txt

@@ -94,6 +94,13 @@ env.AppendUnique(
     LIBPATH=os.environ.get("LIBPATH", "").split(os.pathsep),
 )
 
+conan = SConscript("SConscript_conan")
+if conan != None:
+    env.AppendUnique(
+            CPPPATH=conan["conan"]["CPPPATH"],
+            LIBPATH=conan["conan"]["LIBPATH"]
+        )
+
 env.AppendUnique(
     CPPPATH=[
         "#",

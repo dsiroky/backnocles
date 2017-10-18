@@ -9,12 +9,16 @@ MIT License, see LICENSE.txt.
 # Prerequisites
 
 - g++7 / clang++5 / MSVC++2017
-- scons, libboost-all-dev, python, python-nose, doxygen
+- scons, libboost-all-dev, python, python-nose, doxygen, conan
 
 ## MSVC++ 2017 installation
 
 Visual Studio 2017 Build Tools
 - C++ Desktop
+
+## Install conan packages
+
+`conan install .`
 
 # Tests
 
