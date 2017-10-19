@@ -28,5 +28,5 @@ Visual Studio 2017 Build Tools
 
 # Docs
 
-1. `./build_doc.sh`
+1. `tools/build_doc.sh`
 1. Open `build/doxygen/html/index.html`.
