@@ -1,6 +1,6 @@
-build
-.build_cache
 *.pyc
 *.pyo
-SConscript_conan
-conaninfo.txt
+/build
+/.build_cache
+/SConscript_conan
+/conaninfo.txt
