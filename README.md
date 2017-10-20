@@ -18,6 +18,16 @@ Visual Studio 2017 Build Tools
 
 ## Install conan packages
 
+TODO make a single repository.
+
+Somewhere in a temporary directory:
+
+1. `git clone --depth=1 https://github.com/dsiroky/conan-boost`
+1. `cd conan-boost`
+1. `conan create dsiroky/stable`
+
+In the project root:
+
 `conan install .`
 
 # Tests
