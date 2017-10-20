@@ -8,4 +8,3 @@ SRC = Glob("*.cpp")
 unittests_env.Append(LIBS=[gtest])
 
 prog = unittests_env.Program(OUT, SRC)
-Default(prog)

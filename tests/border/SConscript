@@ -8,4 +8,3 @@ SRC = Glob("*.cpp")
 bordertests_env.Append(LIBS=[gtest])
 
 prog = bordertests_env.Program(OUT, SRC)
-Default(prog)
