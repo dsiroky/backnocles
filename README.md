@@ -1,6 +1,8 @@
-# About
+[![Build Status](https://travis-ci.org/dsiroky/backnocles.svg?branch=master)](https://travis-ci.org/dsiroky/backnocles)
 
-**Backnocles** is a multiplatform C++ demo program for educational purposes.
+# Backnocles
+
+A multiplatform C++ demo program for educational purposes.
 
 # License
 
