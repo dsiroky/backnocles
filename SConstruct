@@ -113,6 +113,16 @@ env.AppendUnique(
     ],
 )
 
+# gtest can't be built with MSVC2017 is the default setting.
+if env["USE_MSVC"]:
+    env.AppendUnique(
+            CPPDEFINES=[
+                "GTEST_HAS_TR1_TUPLE=0",
+                "GTEST_HAS_STD_TUPLE=1",
+                "GTEST_LANG_CXX11=1",
+            ]
+        )
+
 if env["USE_MSVC"]:
     env.AppendUnique(
         CCFLAGS=[
