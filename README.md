@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/dsiroky/backnocles.svg?branch=master)](https://travis-ci.org/dsiroky/backnocles)
+[![Build status](https://ci.appveyor.com/api/projects/status/dek6usnbdw87fyy9/branch/master?svg=true)](https://ci.appveyor.com/project/dsiroky/backnocles/branch/master)
 
 # Backnocles
 

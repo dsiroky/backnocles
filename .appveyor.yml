@@ -1,0 +1,8 @@
+image: Visual Studio 2017
+build: off
+environment:
+  SCONSFLAGS: "--no-cache -j2"
+install:
+  - cmd: tools\setup_appveyor.bat
+test_script:
+  - cmd: tools\run_all_tests.bat
