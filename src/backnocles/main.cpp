@@ -17,6 +17,10 @@ int main(int, char*[])
     {
       break;
     }
+    if (line == "add animal hippo")
+    {
+      std::cout << "hippo added" << '\n';
+    }
   }
 
   return 0;

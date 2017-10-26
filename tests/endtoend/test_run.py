@@ -77,3 +77,15 @@ class TestRun(unittest.TestCase):
         nt.assert_equal(exit_code, 0)
         # a natural death
         nt.assert_less(tend - tstart, 0.5)
+
+    #----------------------------------------------------
+
+    def TestCommandAddAnimal_ProgramPrintsAnimalAdded(self):
+        process = Popen([SERVER_PROG], stdout=PIPE, stdin=PIPE)
+
+        with KillAfterTimeout(process, 1):
+            (output, err) = process.communicate("add animal hippo\nquit\n")
+            exit_code = process.wait()
+
+        nt.assert_equal(exit_code, 0)
+        nt.assert_equal(output, "hippo added\n")
