@@ -4,9 +4,9 @@
 
 #include <string.h>
 
-#include "backnocles/common/disablewarnings.hpp"
+#include "backnocles/utils/disablewarnings.hpp"
   #include <gtest/gtest.h>
-#include "backnocles/common/enablewarnings.hpp"
+#include "backnocles/utils/enablewarnings.hpp"
 
 //==========================================================================
 
