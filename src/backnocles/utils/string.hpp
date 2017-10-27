@@ -15,7 +15,7 @@
 #include "backnocles/utils/enablewarnings.hpp"
 
 //==========================================================================
-namespace bknc {
+namespace backnocles {
 //==========================================================================
 
 /// Trim whitespaces on both ends.
