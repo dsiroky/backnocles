@@ -70,7 +70,7 @@ class TestRun(unittest.TestCase):
 
         tstart = time.time();
         with KillAfterTimeout(process, 1):
-            (output, err) = process.communicate("quit\n")
+            (output, err) = process.communicate(b"quit\n")
             exit_code = process.wait()
         tend = time.time()
 
@@ -84,8 +84,8 @@ class TestRun(unittest.TestCase):
         process = Popen([SERVER_PROG], stdout=PIPE, stdin=PIPE)
 
         with KillAfterTimeout(process, 1):
-            (output, err) = process.communicate("add animal hippo\nquit\n")
+            (output, err) = process.communicate(b"add animal hippo\nquit\n")
             exit_code = process.wait()
 
         nt.assert_equal(exit_code, 0)
-        nt.assert_equal(output, "hippo added\n")
+        nt.assert_equal(output, b"hippo added\n")
