@@ -8,6 +8,7 @@
 
 #include <cassert>
 #include <string_view>
+#include <string>
 #include <iostream>
 
 #include "backnocles/utils/disablewarnings.hpp"
@@ -18,10 +19,11 @@
 namespace backnocles {
 //==========================================================================
 
-/// Trim whitespaces on both ends.
-/// @return subset of the string_view
-inline std::string_view trim(const std::string_view s)
+/// Fast trim whitespaces on both ends without any heap allocations.
+inline std::string_view trim_view(const std::string_view s)
 {
+  // this is a wheel reinvention, boost::trim_copy() might be used
+
   const auto match_non_whitespace = [](const char c)
   {
     return (c != ' ') && (c != '\t');
@@ -38,6 +40,14 @@ inline std::string_view trim(const std::string_view s)
   const auto n = &*end_it - start_it + 1;
   assert(n > 0);
   return {start_it, static_cast<size_t>(n)};
+}
+
+//--------------------------------------------------------------------------
+
+/// Safer version of trim_view().
+inline std::string trim(const std::string_view s)
+{
+  return std::string{trim_view(s)};
 }
 
 //==========================================================================

@@ -18,12 +18,12 @@ using namespace std::string_view_literals;
 
 TEST(String, Trim)
 {
-  EXPECT_EQ(backnocles::trim(""), ""sv);
-  EXPECT_EQ(backnocles::trim("  \t"), ""sv);
-  EXPECT_EQ(backnocles::trim("abc"), "abc"sv);
-  EXPECT_EQ(backnocles::trim(" \tqwe"), "qwe"sv);
-  EXPECT_EQ(backnocles::trim("sdf \t"), "sdf"sv);
-  EXPECT_EQ(backnocles::trim("\t   oioi \t"), "oioi"sv);
+  EXPECT_EQ(backnocles::trim_view(""), ""sv);
+  EXPECT_EQ(backnocles::trim_view("abc"), "abc"sv);
+  EXPECT_EQ(backnocles::trim_view("  \t"), ""sv);
+  EXPECT_EQ(backnocles::trim_view(" \tqwe"), "qwe"sv);
+  EXPECT_EQ(backnocles::trim_view("sdf \t"), "sdf"sv);
+  EXPECT_EQ(backnocles::trim_view("\t   oioi \t"), "oioi"sv);
 }
 
 //==========================================================================
