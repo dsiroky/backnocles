@@ -37,9 +37,9 @@ inline std::string_view trim_view(const std::string_view s)
 
   const auto start_it = std::find_if(s.begin(), s.end(), match_non_whitespace);
 
-  const auto n = &*end_it - start_it + 1;
+  const auto n = &*end_it - &*start_it + 1;
   assert(n > 0);
-  return {start_it, static_cast<size_t>(n)};
+  return std::string_view{&*start_it, static_cast<size_t>(n)};
 }
 
 //--------------------------------------------------------------------------
