@@ -49,7 +49,7 @@ class TestRun(unittest.TestCase):
         """
         No input - the program will be terminated after a timeout.
         """
-        process = Popen([SERVER_PROG], stdout=PIPE)
+        process = Popen([SERVER_PROG], stdout=PIPE, universal_newlines=True)
         tstart = time.time();
         with KillAfterTimeout(process, 1):
             (output, err) = process.communicate()
@@ -66,11 +66,11 @@ class TestRun(unittest.TestCase):
         """
         The program will terminate immediately after issuing the quit command.
         """
-        process = Popen([SERVER_PROG], stdout=PIPE, stdin=PIPE)
+        process = Popen([SERVER_PROG], stdout=PIPE, stdin=PIPE, universal_newlines=True)
 
         tstart = time.time();
         with KillAfterTimeout(process, 1):
-            (output, err) = process.communicate(b"quit\n")
+            (output, err) = process.communicate("quit\n")
             exit_code = process.wait()
         tend = time.time()
 
@@ -81,11 +81,11 @@ class TestRun(unittest.TestCase):
     #----------------------------------------------------
 
     def TestCommandAddAnimal_ProgramPrintsAnimalAdded(self):
-        process = Popen([SERVER_PROG], stdout=PIPE, stdin=PIPE)
+        process = Popen([SERVER_PROG], stdout=PIPE, stdin=PIPE, universal_newlines=True)
 
         with KillAfterTimeout(process, 1):
-            (output, err) = process.communicate(b"add animal hippo\nquit\n")
+            (output, err) = process.communicate("add animal hippo\nquit\n")
             exit_code = process.wait()
 
         nt.assert_equal(exit_code, 0)
-        nt.assert_equal(output, b"hippo added\n")
+        nt.assert_equal(output, "hippo added\n")
