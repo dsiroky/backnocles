@@ -23,7 +23,7 @@ struct overload : Funcs...
 
 /// Overload maker.
 template<class... Funcs>
-auto make_overload(Funcs&&... fs)
+constexpr auto make_overload(Funcs&&... fs)
 {
   return overload<Funcs...>{std::forward<Funcs>(fs)...};
 }
