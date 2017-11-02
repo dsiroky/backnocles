@@ -4,7 +4,10 @@
 
 #include <functional>
 
-#include <gtest/gtest.h>
+#include "backnocles/utils/disablewarnings.hpp"
+  #include <gtest/gtest.h>
+  #include <gmock/gmock.h>
+#include "backnocles/utils/enablewarnings.hpp"
 
 #include "backnocles/utils/functional.hpp"
 
@@ -83,6 +86,84 @@ TEST(Overload, ConstInstance_CallsCorrectSignature)
   EXPECT_FALSE(char_called);
   EXPECT_TRUE(floatptr_called);
   EXPECT_EQ(floatptr_value, &dummy_val);
+}
+
+//==========================================================================
+
+struct SpecializedCallee
+{
+  MOCK_METHOD0(call_int, void());
+  MOCK_METHOD0(call_float, void());
+  MOCK_METHOD0(call_charptr, void());
+
+  template<typename T>
+  void call();
+};
+template<>
+void SpecializedCallee::call<int>() { call_int(); }
+template<>
+void SpecializedCallee::call<float>() { call_float(); }
+template<>
+void SpecializedCallee::call<char*>() { call_charptr(); }
+
+//--------------------------------------------------------------------------
+
+TEST(TypeCallMap, Call)
+{
+  constexpr auto m = backnocles::make_type_call_map(
+                        backnocles::TypeCallMapItem<int>{"aaaint"},
+                        backnocles::TypeCallMapItem<char*>{"chpt"},
+                        backnocles::TypeCallMapItem<float>{"bbbfloat"}
+                      );
+
+  {
+    SpecializedCallee callee;
+    EXPECT_CALL(callee, call_int()).Times(0);
+    EXPECT_CALL(callee, call_charptr()).Times(0);
+    EXPECT_CALL(callee, call_float()).Times(1);
+
+    m.call("bbbfloat", callee);
+  }
+
+  {
+    SpecializedCallee callee;
+    EXPECT_CALL(callee, call_int()).Times(1);
+    EXPECT_CALL(callee, call_charptr()).Times(0);
+    EXPECT_CALL(callee, call_float()).Times(0);
+
+    m.call("aaaint", callee);
+  }
+}
+
+//--------------------------------------------------------------------------
+
+TEST(TypeCallMap, Call_UnknownTag_ThrowsException)
+{
+  constexpr auto m = backnocles::make_type_call_map(
+                        backnocles::TypeCallMapItem<int>{"xxxint"},
+                        backnocles::TypeCallMapItem<float>{"yyyfloat"}
+                      );
+
+  SpecializedCallee callee;
+  EXPECT_CALL(callee, call_int()).Times(0);
+  EXPECT_CALL(callee, call_charptr()).Times(0);
+  EXPECT_CALL(callee, call_float()).Times(0);
+
+  EXPECT_THROW(m.call("othertag", callee), backnocles::TypeCallMapNotFound);
+}
+
+//--------------------------------------------------------------------------
+
+TEST(TypeCallMap, Call_EmptyList_ThrowsException)
+{
+  constexpr auto m = backnocles::make_type_call_map();
+
+  SpecializedCallee callee;
+  EXPECT_CALL(callee, call_int()).Times(0);
+  EXPECT_CALL(callee, call_charptr()).Times(0);
+  EXPECT_CALL(callee, call_float()).Times(0);
+
+  EXPECT_THROW(m.call("othertag", callee), backnocles::TypeCallMapNotFound);
 }
 
 //==========================================================================
