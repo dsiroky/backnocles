@@ -6,9 +6,10 @@
 #ifndef FUNCTIONAL_HPP__KG9RFBRT
 #define FUNCTIONAL_HPP__KG9RFBRT
 
-#include <utility>
-#include <string_view>
+#include <functional>
 #include <stdexcept>
+#include <string_view>
+#include <utility>
 
 //==========================================================================
 namespace backnocles {
@@ -82,13 +83,25 @@ public:
   }
 
   template<class Callee>
-  constexpr void call(const std::string_view tag, Callee& callee) const
+  constexpr void call(const std::string_view tag, Callee&& callee) const
   {
     if (tag == m_tag)
     {
       callee.template call<T>();
     } else {
       m_next.call(tag, callee);
+    }
+  }
+
+  template<class Callee, class UnknownCallback>
+  constexpr void call(const std::string_view tag,
+                      Callee&& callee, UnknownCallback&& unknown_cb) const
+  {
+    if (tag == m_tag)
+    {
+      callee.template call<T>();
+    } else {
+      m_next.call(tag, callee, unknown_cb);
     }
   }
 
@@ -102,9 +115,16 @@ private:
 struct TCMTailNode
 {
   template<class Callee>
-  constexpr void call(const std::string_view, Callee&) const
+  constexpr void call(const std::string_view, Callee&&) const
   {
     throw TypeCallMapNotFound{};
+  }
+
+  template<class Callee, class UnknownCallback>
+  constexpr void call(const std::string_view tag,
+                      Callee&&, UnknownCallback&& unknown_cb) const
+  {
+    unknown_cb(tag);
   }
 };
 

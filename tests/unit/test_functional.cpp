@@ -166,5 +166,28 @@ TEST(TypeCallMap, Call_EmptyList_ThrowsException)
   EXPECT_THROW(m.call("othertag", callee), backnocles::TypeCallMapNotFound);
 }
 
+//--------------------------------------------------------------------------
+
+TEST(TypeCallMap, Call_UnknownTag_CallCustomCallback)
+{
+  constexpr auto m = backnocles::make_type_call_map(
+                        backnocles::TypeCallMapItem<int>{"xxxint"},
+                        backnocles::TypeCallMapItem<float>{"yyyfloat"}
+                      );
+
+  SpecializedCallee callee;
+  EXPECT_CALL(callee, call_int()).Times(0);
+  EXPECT_CALL(callee, call_charptr()).Times(0);
+  EXPECT_CALL(callee, call_float()).Times(0);
+
+  std::string unknown_tag;
+  m.call("othertag", callee,
+          [&](const std::string_view tag)
+          {
+            unknown_tag = tag;
+          });
+  EXPECT_EQ(unknown_tag, "othertag");
+}
+
 //==========================================================================
 } // namespace
