@@ -2,6 +2,8 @@
 ///
 /// @file
 
+/// TODO deny compilation if types in a call map are not unique
+
 #pragma once
 #ifndef FUNCTIONAL_HPP__KG9RFBRT
 #define FUNCTIONAL_HPP__KG9RFBRT
