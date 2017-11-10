@@ -32,23 +32,39 @@ struct has_call_operator
   static constexpr bool value = (sizeof(test<F>(0)) == 1);
 };
 
-template<class F>
-inline constexpr auto has_call_operator_v = has_call_operator<F>::value;
-
 //==========================================================================
 
+// MSVC2017 does not support [Pack expansions in
+// using-declarations](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0195r2.html)
+// and folding expressions. This has to be implemented the old fashioned
+// recursive way.
+
 /// Inherit from given callables to provide an aggregated operator().
-template<class... Funcs>
-struct overload : Funcs...
+template<class F, class... Funcs>
+struct overload : F, overload<Funcs...>
 {
-  static_assert((has_call_operator_v<Funcs> && ...),
+  static_assert(has_call_operator<F>::value,
                 "all Funcs must have at least one operator()");
 
-  constexpr overload(Funcs&&... fs)
-    : Funcs{std::forward<Funcs>(fs)}...
+  constexpr overload(F&& f, Funcs&&... fs)
+    : F{std::forward<F>(f)}, overload<Funcs...>{std::forward<Funcs>(fs)...}
   {}
 
-  using Funcs::operator()...;
+  using F::operator();
+  using overload<Funcs...>::operator();
+};
+
+template<class F>
+struct overload<F> : F
+{
+  static_assert(has_call_operator<F>::value,
+                "all Funcs must have at least one operator()");
+
+  constexpr overload(F&& f)
+    : F{std::forward<F>(f)}
+  {}
+
+  using F::operator();
 };
 
 //--------------------------------------------------------------------------
@@ -175,10 +191,21 @@ constexpr auto operator+(const NextNode& lhs, const TypeCallMapItem<T>& rhs)
 
 /// Create a static type call map.
 /// @param items pack of TypeCallMapItem values.
-template<class... Items>
-inline constexpr auto make_type_call_map(const Items&... items)
+template<class I, class... Items>
+inline constexpr auto make_type_call_map(const I& item, const Items&... items)
 {
-  return (detail::TCMTailNode{} + ... + items);
+  return make_type_call_map(items...) + item;
+}
+
+template<class I>
+inline constexpr auto make_type_call_map(const I& item)
+{
+  return detail::TCMTailNode{} + item;
+}
+
+inline constexpr auto make_type_call_map()
+{
+  return detail::TCMTailNode{};
 }
 
 //==========================================================================

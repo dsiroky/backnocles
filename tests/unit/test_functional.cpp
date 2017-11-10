@@ -19,6 +19,23 @@ using namespace std::string_view_literals;
 
 //==========================================================================
 
+TEST(Overload, SingleLambda)
+{
+  bool int_called{false};
+  int int_value{0};
+
+  auto f = backnocles::make_overload(
+                [&](int v) { int_called = true; int_value = v; }
+              );
+
+  f(int{9});
+
+  EXPECT_TRUE(int_called);
+  EXPECT_EQ(int_value, 9);
+}
+
+//==========================================================================
+
 void dummy_doubleptr_signature_func(double*) {}
 
 TEST(Overload, CallsCorrectSignature1)
