@@ -15,6 +15,10 @@
 namespace tests {
 //==========================================================================
 
+using namespace std::string_view_literals;
+
+//==========================================================================
+
 void dummy_doubleptr_signature_func(double*) {}
 
 TEST(Overload, CallsCorrectSignature1)
@@ -111,9 +115,9 @@ void SpecializedCallee::call<char*>() { call_charptr(); }
 TEST(TypeCallMap, Call)
 {
   constexpr auto m = backnocles::make_type_call_map(
-                        backnocles::TypeCallMapItem<int>{"aaaint"},
-                        backnocles::TypeCallMapItem<char*>{"chpt"},
-                        backnocles::TypeCallMapItem<float>{"bbbfloat"}
+                        backnocles::TypeCallMapItem<int>{"aaaint"sv},
+                        backnocles::TypeCallMapItem<char*>{"chpt"sv},
+                        backnocles::TypeCallMapItem<float>{"bbbfloat"sv}
                       );
 
   {
@@ -140,8 +144,8 @@ TEST(TypeCallMap, Call)
 TEST(TypeCallMap, Call_UnknownTag_ThrowsException)
 {
   constexpr auto m = backnocles::make_type_call_map(
-                        backnocles::TypeCallMapItem<int>{"xxxint"},
-                        backnocles::TypeCallMapItem<float>{"yyyfloat"}
+                        backnocles::TypeCallMapItem<int>{"xxxint"sv},
+                        backnocles::TypeCallMapItem<float>{"yyyfloat"sv}
                       );
 
   SpecializedCallee callee;
@@ -171,8 +175,8 @@ TEST(TypeCallMap, Call_EmptyList_ThrowsException)
 TEST(TypeCallMap, Call_UnknownTag_CallCustomCallback)
 {
   constexpr auto m = backnocles::make_type_call_map(
-                        backnocles::TypeCallMapItem<int>{"xxxint"},
-                        backnocles::TypeCallMapItem<float>{"yyyfloat"}
+                        backnocles::TypeCallMapItem<int>{"xxxint"sv},
+                        backnocles::TypeCallMapItem<float>{"yyyfloat"sv}
                       );
 
   SpecializedCallee callee;

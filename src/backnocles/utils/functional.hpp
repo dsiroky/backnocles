@@ -47,6 +47,8 @@ struct overload : Funcs...
   constexpr overload(Funcs&&... fs)
     : Funcs{std::forward<Funcs>(fs)}...
   {}
+
+  using Funcs::operator()...;
 };
 
 //--------------------------------------------------------------------------
