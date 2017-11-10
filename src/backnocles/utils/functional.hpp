@@ -17,10 +17,33 @@
 namespace backnocles {
 //==========================================================================
 
+/// type trait
+template<class F>
+struct has_call_operator
+{
+  // detect regular operator() ... sizeof = 1
+  template<typename C>
+  static char test(decltype(&C::operator()));
+
+  // worst match ... sizeof = 2
+  template<typename C>
+  static char (&test(...))[2];
+
+  static constexpr bool value = (sizeof(test<F>(0)) == 1);
+};
+
+template<class F>
+inline constexpr auto has_call_operator_v = has_call_operator<F>::value;
+
+//==========================================================================
+
 /// Inherit from given callables to provide an aggregated operator().
 template<class... Funcs>
 struct overload : Funcs...
 {
+  static_assert((has_call_operator_v<Funcs> && ...),
+                "all Funcs must have at least one operator()");
+
   constexpr overload(Funcs&&... fs)
     : Funcs{std::forward<Funcs>(fs)}...
   {}
