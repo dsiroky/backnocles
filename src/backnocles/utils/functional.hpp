@@ -70,6 +70,16 @@ struct overload<F> : F
 //--------------------------------------------------------------------------
 
 /// Overload maker.
+/// Example:
+/// @code
+/// auto f = backnocles::make_overload(
+///               [&](char v) { std::cout << "char " << v << '\n';},
+///               [&](int v) { std::cout << "int " << v << '\n';},
+///               [&](float*) { std::cout << "float ptr" << '\n'; }
+///             );
+/// f(4); // prints "int 4"
+/// f('a'); // prints "char a"
+/// @endcode
 template<class... Funcs>
 constexpr auto make_overload(Funcs&&... fs)
 {
