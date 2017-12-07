@@ -11,13 +11,9 @@ TOOL_PATH = os.path.join(PROJECT_ROOT, "tools/scons")
 #==========================================================================
 # build options
 
-DEBUG = 1
-VERBOSE = 0
-SANITIZERS = ""
-
-debug = bool(int(ARGUMENTS.get("debug", DEBUG)))
-verbose = bool(int(ARGUMENTS.get("verbose", VERBOSE)))
-sanitizers = ARGUMENTS.get("sanitizers", SANITIZERS)
+debug = bool(int(ARGUMENTS.get("debug", 1)))
+verbose = bool(int(ARGUMENTS.get("verbose", 0)))
+sanitizers = ARGUMENTS.get("sanitizers", "")
 
 Help("""
 Variants
@@ -26,8 +22,8 @@ scons verbose=(0|1)              print short or long processing commands (defaul
 scons debug=(0|1)                compile debug or release (default: %(debug)i)
 scons sanitizers=address,leak    link sanitizers (not in release build, default: "%(sanitizers)s")
 scons run_e2e_tests
-""" % {"verbose":VERBOSE, "debug":DEBUG,
-        "sanitizers":SANITIZERS})
+""" % {"verbose":verbose, "debug":debug,
+        "sanitizers":sanitizers})
 
 #==========================================================================
 
