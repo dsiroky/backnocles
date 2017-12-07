@@ -19,6 +19,25 @@ using namespace std::string_view_literals;
 
 //==========================================================================
 
+TEST(HasCallOperator, Value)
+{
+  EXPECT_FALSE(backnocles::has_call_operator<int>::value);
+
+  struct WithOperator
+  {
+    void operator()() {}
+  };
+  EXPECT_TRUE(backnocles::has_call_operator<WithOperator>::value);
+
+  struct WithComplexOperator
+  {
+    int operator()(float) { return 0; }
+  };
+  EXPECT_TRUE(backnocles::has_call_operator<WithComplexOperator>::value);
+}
+
+//==========================================================================
+
 TEST(Overload, SingleLambda)
 {
   bool int_called{false};

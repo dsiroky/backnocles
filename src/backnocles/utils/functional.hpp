@@ -21,13 +21,16 @@ namespace backnocles {
 template<class F>
 struct has_call_operator
 {
+  struct size_one_t { char x; };
+  struct size_two_t { char x[2]; };
+
   // detect regular operator() ... sizeof = 1
   template<typename C>
-  static char test(decltype(&C::operator()));
+  static size_one_t test(decltype(&C::operator()));
 
   // worst match ... sizeof = 2
   template<typename C>
-  static char (&test(...))[2];
+  static size_two_t test(...);
 
   static constexpr bool value = (sizeof(test<F>(0)) == 1);
 };
