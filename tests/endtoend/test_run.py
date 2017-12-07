@@ -75,6 +75,7 @@ class TestRun(unittest.TestCase):
         tend = time.time()
 
         nt.assert_equal(exit_code, 0)
+        nt.assert_equal(output, "bye\n")
         # a natural death
         nt.assert_less(tend - tstart, 0.5)
 
@@ -84,8 +85,8 @@ class TestRun(unittest.TestCase):
         process = Popen([SERVER_PROG], stdout=PIPE, stdin=PIPE, universal_newlines=True)
 
         with KillAfterTimeout(process, 1):
-            (output, err) = process.communicate("add animal hippo\nquit\n")
+            (output, err) = process.communicate("addanimal hippo\nquit\n")
             exit_code = process.wait()
 
         nt.assert_equal(exit_code, 0)
-        nt.assert_equal(output, "hippo added\n")
+        nt.assert_equal(output, "hippo id:1 added\nbye\n")

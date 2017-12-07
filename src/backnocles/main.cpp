@@ -2,27 +2,15 @@
 ///
 /// @file
 
-#include <iostream>
-#include <string>
+#include <memory>
+
+#include "backnocles/app.hpp"
 
 //==========================================================================
 
 int main(int, char*[])
 {
-  std::cin >> std::ws;
-  while (true)
-  {
-    std::string line;
-    std::getline(std::cin, line);
-    if (line == "quit")
-    {
-      break;
-    }
-    if (line == "add animal hippo")
-    {
-      std::cout << "hippo added" << '\n';
-    }
-  }
-
-  return 0;
+  // place the app instance on the heap instead on the stack
+  auto app = std::make_unique<backnocles::AppConstructor>();
+  return app->run();
 }
