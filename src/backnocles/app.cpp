@@ -11,17 +11,23 @@
 namespace backnocles {
 //==========================================================================
 
-int App::ui_loop()
+int App::ui_loop() noexcept
 {
-  std::cin >> std::ws;
-  bool quit{false};
-  while (!quit)
+  try
   {
-    std::string line;
-    std::getline(std::cin, line);
-    request(line,
-            [&](const auto output) { std::cout << output << '\n'; },
-            [&](){ quit = true; });
+    std::cin >> std::ws;
+    bool quit{false};
+    while (!quit)
+    {
+      std::string line;
+      std::getline(std::cin, line);
+      request(line,
+              [&](const auto output) { std::cout << output << '\n'; },
+              [&](){ quit = true; });
+    }
+  } catch (const std::exception& exc) {
+    std::cerr << "error: " << exc.what() << '\n';
+    return -1;
   }
 
   return 0;
@@ -51,7 +57,7 @@ AppConstructor::AppConstructor()
 
 //--------------------------------------------------------------------------
 
-int AppConstructor::run()
+int AppConstructor::run() noexcept
 {
   return m_app.ui_loop();
 }

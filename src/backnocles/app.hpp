@@ -17,7 +17,7 @@ class App
 {
 public:
   /// @return process exit code
-  int ui_loop();
+  int ui_loop() noexcept;
   /// Top-level request-response method for user IO.
   void request(const std::string_view input,
                 const std::function<void(const std::string_view)> output_cb,
@@ -34,7 +34,7 @@ class AppConstructor
 public:
   AppConstructor();
   /// @return process exit code.
-  int run();
+  int run() noexcept;
 
 private:
   App m_app;
